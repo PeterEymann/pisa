@@ -16,50 +16,55 @@
 # limitations under the License.
 
 __version__ = "$Revision: 247 $"
-__author__  = "$Author: holtwick $"
-__date__    = "$Date: 2008-08-15 13:37:57 +0200 (Fr, 15 Aug 2008) $"
-__svnid__   = "$Id: setup.py 247 2008-08-15 11:37:57Z holtwick $"
+__author__ = "$Author: holtwick $"
+__date__ = "$Date: 2008-08-15 13:37:57 +0200 (Fr, 15 Aug 2008) $"
+__svnid__ = "$Id: setup.py 247 2008-08-15 11:37:57Z holtwick $"
 
 try:
     from setuptools import setup, find_packages
 except ImportError:
     from ez_setup import use_setuptools
+
     use_setuptools()
     from setuptools import setup, find_packages
 
 setup(
-    name           = "pisa",
-    version        = "VERSION{3.0.33}VERSION"[8:-8],
-    description    = "PDF generator using HTML and CSS",
-    license        = "Apache License 2.0",
-    author         = "Dirk Holtwick",
-    author_email   = "dirk.holtwick@gmail.com",
-    url            = "http://www.xhtml2pdf.com",
-    download_url   = "http://pypi.python.org/pypi/pisa/",
-    keywords       = "PDF, HTML, XHTML, XML, CSS",
+    name="pisa",
+    version="VERSION{3.0.33}VERSION"[8:-8],
+    description="PDF generator using HTML and CSS",
+    license="Apache License 2.0",
+    author="Dirk Holtwick",
+    author_email="dirk.holtwick@gmail.com",
+    url="http://www.xhtml2pdf.com",
+    download_url="http://pypi.python.org/pypi/pisa/",
+    keywords="PDF, HTML, XHTML, XML, CSS",
 
-    requires       = ["html5lib", "pypdf", "pil"], #, "reportlab"],
+    requires=[
+        "html5lib",
+        "Pillow",
+        "reportlab"
+    ],
 
-    include_package_data = False,
+    include_package_data=False,
 
-    packages = [
+    packages=[
         'ho',
         'ho.pisa',
         'sx',
         'sx.pisa3',
         'sx.w3c',
-        ],
+    ],
 
-    test_suite = "tests",
+    test_suite="tests",
 
-    entry_points = {
+    entry_points={
         'console_scripts': [
             'pisa = sx.pisa3:command',
             'xhtml2pdf = sx.pisa3:command',
-            ]
-        },
+        ]
+    },
 
-    long_description = """
+    long_description="""
 pisa is a html2pdf converter using the ReportLab Toolkit,
 the HTML5lib and pyPdf. It supports HTML 5 and CSS 2.1 (and some of CSS 3).
 It is completely written in pure Python so it is platform independent.
@@ -70,7 +75,7 @@ KID Templating, TurboGears, Django, Zope, Plone, Google AppEngine (GAE) etc.
 (see 'demo' folder for examples)
         """.strip(),
 
-    classifiers = [x.strip() for x in """
+    classifiers=[x.strip() for x in """
         License :: Freeware
         License :: OSI Approved
         License :: OSI Approved :: Apache Software License
@@ -128,4 +133,4 @@ KID Templating, TurboGears, Django, Zope, Plone, Google AppEngine (GAE) etc.
         Topic :: Utilities
         """.strip().splitlines()],
 
-    )
+)

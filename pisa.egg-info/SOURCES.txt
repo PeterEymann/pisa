@@ -173,4 +173,3 @@ tests/samples/utf8.pdf
 tests/samples/font/CODE2000.TTF
 tests/samples/img/denker.png
 tests/samples/img/tree.jpg
-tests/tmp/right/borders.pdf

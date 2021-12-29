@@ -26,7 +26,8 @@ import os
 import os.path
 
 import html5lib
-from html5lib import treebuilders, serializer, treewalkers, inputstream
+import six
+from html5lib import treebuilders
 from xml.dom import Node
 import xml.dom.minidom
 
@@ -593,27 +594,18 @@ def pisaParser(src, c, default_css="", xhtml=False, encoding=None, xml_output=No
     else:
         parser = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"))
 
-    if type(src) in types.StringTypes:
-        if type(src) is types.UnicodeType:
-            encoding = "utf8"
-            src = src.encode(encoding)
-        src = pisaTempFile(src, capacity=c.capacity)    
+    parser_kwargs = {}
+    if isinstance(src, six.text_type):
+        # If an encoding was provided, do not change it.
+        if not encoding:
+            encoding = "utf-8"
+        src = src.encode(encoding)
+        src = pisaTempFile(src, capacity=c.capacity)
+        # To pass the encoding used to convert the text_type src to binary_type
+        # on to html5lib's parser to ensure proper decoding
+        parser_kwargs['transport_encoding'] = encoding
 
-    # Test for the restrictions of html5lib
-    if encoding:
-        # Workaround for html5lib<0.11.1        
-        if hasattr(inputstream, "isValidEncoding"):
-            if encoding.strip().lower() == "utf8":
-                encoding = "utf-8"
-            if not inputstream.isValidEncoding(encoding):
-                log.error("%r is not a valid encoding e.g. 'utf8' is not valid but 'utf-8' is!", encoding)
-        else:
-             if inputstream.codecName(encoding) is None:
-                 log.error("%r is not a valid encoding", encoding)
-    
-    document = parser.parse(
-        src,
-        encoding=encoding)
+    document = parser.parse(src, **parser_kwargs)
         
     if xml_output:        
         xml_output.write(document.toprettyxml(encoding="utf8"))    

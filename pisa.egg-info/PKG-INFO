@@ -73,5 +73,5 @@ Classifier: Topic :: Text Processing :: Markup :: HTML
 Classifier: Topic :: Text Processing :: Markup :: XML
 Classifier: Topic :: Utilities
 Requires: html5lib
-Requires: pypdf
-Requires: pil
+Requires: Pillow
+Requires: reportlab
